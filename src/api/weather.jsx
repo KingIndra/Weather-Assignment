@@ -14,7 +14,6 @@ const useWeatherApi = () => {
       const response = await axios.get(
         `https://api.weatherapi.com/v1/forecast.json?key=71f016df484c41f4b2f193321241806&days=5&q=${city}`
       );
-      console.log(response.data);
       setWeatherData(response.data);
     } catch (error) {
       setError(error);

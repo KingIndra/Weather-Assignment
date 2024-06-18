@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useWeatherApi from "../api/weather";
 import WeatherData from "./WeatherData";
+import Forecast from "./Forecast";
 
 const Search = () => {
   const [city, setCity] = useState("");
@@ -40,6 +41,7 @@ const Search = () => {
 
       {error && <p>Error: {error.message}</p>}
       {weatherData && <WeatherData weatherData={weatherData} />}
+      {weatherData && <Forecast weatherData={weatherData} />}
     </div>
   );
 };

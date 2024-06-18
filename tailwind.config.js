@@ -2,7 +2,14 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      rotate: {
+        90: "90deg",
+      },
+    },
   },
-  plugins: [],
+  daisyui: {
+    themes: ["light", "dark", "cupcake"],
+  },
+  plugins: [require("daisyui")],
 };
