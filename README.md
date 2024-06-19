@@ -12,7 +12,7 @@ To access the weather data, you will need an API key from [WeatherAPI](https://w
 
 ## Environment Variables
 
-Once you have obtained the API key, create a `.env` file in the root directory of your project. Inside the `.env` file, paste your API key with the variable name `VITE_API_KEY`.
+After acquiring the API key, open a file named `.env` located in the root directory of your project. Insert your API key into this file under the variable name `VITE_API_KEY`.
 
 Make sure to keep your API key secure and avoid sharing it publicly.
 
