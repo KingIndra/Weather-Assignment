@@ -113,6 +113,7 @@ const Dropdown = () => {
 
           <input
             className="outline-none bg-transparent w-full"
+            placeholder="Add a city"
             type="text"
             value={newCity}
             onChange={(event) => {
