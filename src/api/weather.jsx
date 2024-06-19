@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export default function useWeatherApi() {
+  const apiKey = import.meta.env.VITE_API_KEY;
+
   const getWeatherQuery = (city = "Delhi") => {
     if (city === "") city = "Delhi";
 
@@ -10,7 +12,7 @@ export default function useWeatherApi() {
       queryFn: async () =>
         (
           await axios.get(
-            `https://api.weatherapi.com/v1/forecast.json?key=71f016df484c41f4b2f193321241806&days=5&q=${city}`
+            `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}=5&q=${city}`
           )
         ).data,
     });

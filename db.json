@@ -1,3 +1,8 @@
 {
-  "cities": []
+  "cities": [
+    {
+      "id": "f78b",
+      "name": "Meerut"
+    }
+  ]
 }
