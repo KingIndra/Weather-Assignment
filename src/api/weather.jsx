@@ -1,28 +1,22 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const useWeatherApi = () => {
-  const [weatherData, setWeatherData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+export default function useWeatherApi() {
+  const getWeatherQuery = (city = "Delhi") => {
+    if (city === "") city = "Delhi";
 
-  const fetchWeather = async (city = "Delhi, India") => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await axios.get(
-        `https://api.weatherapi.com/v1/forecast.json?key=71f016df484c41f4b2f193321241806&days=5&q=${city}`
-      );
-      setWeatherData(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
+    return useQuery({
+      queryKey: ["getWeather", city],
+      queryFn: async () =>
+        (
+          await axios.get(
+            `https://api.weatherapi.com/v1/forecast.json?key=71f016df484c41f4b2f193321241806&days=5&q=${city}`
+          )
+        ).data,
+    });
   };
 
-  return { weatherData, loading, error, fetchWeather };
-};
-
-export default useWeatherApi;
+  return {
+    getWeatherQuery,
+  };
+}

@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import useCitiesAPI from "../api/cities";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import useTempStore from "../zustand/tempStore";
 
 const Dropdown = () => {
+  const { setShowDropdown, setCity } = useTempStore();
   const { cities, addCity, removeCity, updateCity } = useCitiesAPI();
   const [hoveredCity, setHoveredCity] = React.useState(null);
   const [newCity, setNewCity] = React.useState("");
+  const [cityEditing, setCityEditing] = React.useState("");
+  const editElement = React.useRef(null);
 
   return (
     <div className="text-black px-3 pb-3">
@@ -19,28 +24,63 @@ const Dropdown = () => {
                 key={city.id}
                 onMouseEnter={() => setHoveredCity(city.id)}
                 onMouseLeave={() => setHoveredCity(null)}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleCitySelect(city);
+                onClick={async () => {
+                  setShowDropdown(false);
+                  //   await fetchWeather(city.name);
+                  setCity(city.name);
                 }}
               >
                 <div className="flex justify-between items-center">
-                  <input
-                    className="outline-none bg-transparent"
-                    type="text"
-                    value={city.name}
-                    onChange={(event) => {
-                      const newName = event.target.value;
-                      updateCity(city.id, newName);
-                    }}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        event.target.blur();
-                      }
-                    }}
-                  />
+                  {cityEditing === city.id ? (
+                    <input
+                      ref={editElement}
+                      className="outline-none bg-transparent"
+                      type="text"
+                      value={city.name}
+                      onChange={(event) => {
+                        const newName = event.target.value;
+                        updateCity(city.id, newName);
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          setCityEditing("");
+                          event.target.blur();
+                        }
+                      }}
+                      onBlur={() => {
+                        updateCity(city.id, city.name);
+                      }}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                      }}
+                    />
+                  ) : (
+                    <div
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          setCityEditing("");
+                          updateCity(city.id, city.name);
+                        }
+                      }}
+                    >
+                      {city.name}
+                    </div>
+                  )}
                   {hoveredCity === city.id && (
                     <div className="flex items-center">
+                      <div
+                        className="hover:text-gray-500 pr-1"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          setCityEditing(city.id);
+                          setTimeout(() => {
+                            editElement.current.focus();
+                          }, 0);
+                        }}
+                      >
+                        <EditIcon fontSize="2" />
+                      </div>
+
                       <div
                         className="hover:text-gray-500 pl-1"
                         onClick={(event) => {
@@ -59,14 +99,6 @@ const Dropdown = () => {
         </ul>
 
         <div className="flex items-center justify-between">
-          <input
-            className="outline-none bg-transparent w-full"
-            type="text"
-            value={newCity}
-            onChange={(event) => {
-              setNewCity(event.target.value);
-            }}
-          />
           <div
             className="hover:text-gray-500"
             onClick={() => {
@@ -78,6 +110,15 @@ const Dropdown = () => {
           >
             <AddIcon />
           </div>
+
+          <input
+            className="outline-none bg-transparent w-full"
+            type="text"
+            value={newCity}
+            onChange={(event) => {
+              setNewCity(event.target.value);
+            }}
+          />
         </div>
       </div>
     </div>

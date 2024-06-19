@@ -5,7 +5,7 @@ const TemperatureToggle = () => {
   const { temp, toggle } = useTempStore();
   return (
     <div className="flex items-center gap-2 mb-4 justify-between">
-      <p className="text-xl font-semibold">Weather Application (°{temp})</p>
+      <p className="text-lg font-semibold">Weather Application (°{temp})</p>
       <input
         type="checkbox"
         className="toggle toggle-sm bg-blue-950 hover:bg-blue-900 border-blue-950"

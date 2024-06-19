@@ -26,13 +26,9 @@ export default function WeatherData({ weatherData }) {
         <img src={weatherData.current.condition.icon} alt="" />
         <p>{temprature}</p>
       </div>
-      <div className="flex justify-between items-center w-[11rem]">
-        <p className="text-xs">{weatherData.current.condition.text}</p>
-        <div>{"|"}</div>
-        <p className="text-xs">
-          Wind Speed: {weatherData.current.wind_kph} km/h
-        </p>
-      </div>
+      <p className="text-xs">{weatherData.current.condition.text}</p>
+
+      <p className="text-xs">Wind Speed: {weatherData.current.wind_kph} km/h</p>
     </div>
   );
 }

@@ -1,24 +1,33 @@
-import { create } from "zustand";
+import create from "zustand";
+import { persist } from "zustand/middleware";
 
-const useTempStore = create((set) => ({
-  temp: "C",
+const useTempStore = create(
+  persist(
+    (set) => ({
+      temp: "C",
 
-  toggle: () =>
-    set((state) => ({
-      temp: state.temp === "C" ? "F" : "C",
-    })),
+      toggle: () =>
+        set((state) => ({
+          temp: state.temp === "C" ? "F" : "C",
+        })),
 
-  city: "",
+      city: "",
 
-  setCity: (city) => set({ city }),
+      setCity: (city) => set({ city }),
 
-  lastSearchedCity: "",
+      lastSearchedCity: "",
 
-  setLastSearchedCity: (lastSearchedCity) => set({ lastSearchedCity }),
+      setLastSearchedCity: (lastSearchedCity) => set({ lastSearchedCity }),
 
-  showDropdown: false,
+      showDropdown: false,
 
-  setShowDropdown: (showDropdown) => set({ showDropdown }),
-}));
+      setShowDropdown: (showDropdown) => set({ showDropdown }),
+    }),
+    {
+      name: "tempStore", // Name for the persisted state
+      getStorage: () => localStorage, // Storage mechanism (localStorage in this case)
+    }
+  )
+);
 
 export default useTempStore;

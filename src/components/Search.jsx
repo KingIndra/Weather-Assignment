@@ -7,27 +7,12 @@ import useTempStore from "../zustand/tempStore";
 
 const Search = () => {
   const { city, setCity, showDropdown, setShowDropdown } = useTempStore();
-  const { weatherData, loading, error, fetchWeather } = useWeatherApi();
+  const { getWeatherQuery } = useWeatherApi();
+  const getWeather = getWeatherQuery(city);
 
-  const handleSearch = () => {
-    if (city.trim() !== "") {
-      fetchWeather(city);
-    }
-  };
-
-  useEffect(() => {
-    const lastSearchedCity = localStorage.getItem("lastSearchedCity");
-    if (lastSearchedCity) {
-      setCity(lastSearchedCity);
-      fetchWeather(lastSearchedCity);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (city.trim() !== "") {
-      localStorage.setItem("lastSearchedCity", city);
-    }
-  }, [city]);
+  const weatherData = getWeather.data;
+  const error = getWeather.isError;
+  const loading = getWeather.isLoading;
 
   return (
     <div className="flex flex-col items-center">
@@ -44,16 +29,11 @@ const Search = () => {
             className="bg-transparent focus:outline-none w-full text-black font-semibold"
             type="text"
             value={city}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={(event) => setCity(event.target.value)}
             placeholder="Enter city name"
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                handleSearch();
-              }
-            }}
           />
 
-          <button className="mt-2" onClick={handleSearch} disabled={loading}>
+          <button className="mt-2" disabled={loading}>
             {loading ? (
               <box-icon name="search-alt" animation="flashing"></box-icon>
             ) : (
@@ -67,9 +47,9 @@ const Search = () => {
       {error && <p>Error: {error.message}</p>}
       {weatherData && <WeatherData weatherData={weatherData} />}
       {weatherData && <Forecast weatherData={weatherData} />}
-      {city === "" && (
+      {/* {city === "" && (
         <p className="mt-2 text-sm text-gray-500">Please enter a city name</p>
-      )}
+      )} */}
     </div>
   );
 };
