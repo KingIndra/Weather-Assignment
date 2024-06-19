@@ -8,7 +8,7 @@ const TemperatureToggle = () => {
       <p className="text-xl font-semibold">Weather Application (°{temp})</p>
       <input
         type="checkbox"
-        className="toggle toggle-sm bg-blue-950 hover:bg-blue-900 border-blue-950 transform rotate-90"
+        className="toggle toggle-sm bg-blue-950 hover:bg-blue-900 border-blue-950"
         checked={temp === "C"}
         onChange={toggle}
       />
