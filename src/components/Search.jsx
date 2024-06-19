@@ -4,7 +4,6 @@ import WeatherData from "./WeatherData";
 import Forecast from "./Forecast";
 import Dropdown from "./Dropdown";
 import useTempStore from "../zustand/tempStore";
-import { create } from "zustand";
 
 const Search = () => {
   const { city, setCity, showDropdown, setShowDropdown } = useTempStore();

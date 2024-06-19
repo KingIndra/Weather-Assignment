@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import useCitiesAPI from "../api/cities";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
 
 const Dropdown = () => {
   const { cities, addCity, removeCity, updateCity } = useCitiesAPI();
   const [hoveredCity, setHoveredCity] = React.useState(null);
+  const [newCity, setNewCity] = React.useState("");
 
   return (
     <div className="text-black px-3 pb-3">
@@ -24,21 +25,27 @@ const Dropdown = () => {
                 }}
               >
                 <div className="flex justify-between items-center">
-                  <div>{city.name}</div>
+                  <input
+                    className="outline-none bg-transparent"
+                    type="text"
+                    value={city.name}
+                    onChange={(event) => {
+                      const newName = event.target.value;
+                      updateCity(city.id, newName);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.target.blur();
+                      }
+                    }}
+                  />
                   {hoveredCity === city.id && (
                     <div className="flex items-center">
-                      <div
-                        className="hover:text-gray-500 pr-1"
-                        onClick={(event) => {
-                          event.stopPropagation();
-                        }}
-                      >
-                        <EditIcon fontSize="2" />
-                      </div>
                       <div
                         className="hover:text-gray-500 pl-1"
                         onClick={(event) => {
                           event.stopPropagation();
+                          removeCity(city.id);
                         }}
                       >
                         <DeleteIcon fontSize="2" />
@@ -50,6 +57,28 @@ const Dropdown = () => {
             );
           })}
         </ul>
+
+        <div className="flex items-center justify-between">
+          <input
+            className="outline-none bg-transparent w-full"
+            type="text"
+            value={newCity}
+            onChange={(event) => {
+              setNewCity(event.target.value);
+            }}
+          />
+          <div
+            className="hover:text-gray-500"
+            onClick={() => {
+              if (newCity) {
+                addCity(newCity);
+                setNewCity("");
+              }
+            }}
+          >
+            <AddIcon />
+          </div>
+        </div>
       </div>
     </div>
   );
