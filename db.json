@@ -1,16 +1,3 @@
 {
-  "cities": [
-    {
-      "id": "28a4",
-      "name": "Delhi"
-    },
-    {
-      "id": "e83b",
-      "name": "Meerut"
-    },
-    {
-      "id": "aef3",
-      "name": "Manali"
-    }
-  ]
+  "cities": []
 }
