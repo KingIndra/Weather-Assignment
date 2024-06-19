@@ -12,7 +12,7 @@ export default function useWeatherApi() {
       queryFn: async () =>
         (
           await axios.get(
-            `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}=5&q=${city}`
+            `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&days=5&q=${city}`
           )
         ).data,
     });
