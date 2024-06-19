@@ -6,6 +6,16 @@ To get started, make sure you have [Node.js](https://nodejs.org/) installed on y
 npm install
 ```
 
+## JSON Server
+
+To run the JSON server, use the following command:
+
+```bash
+npx json-server --watch db.json --port 4000
+```
+
+This will start the JSON server and you can access your data at [http://localhost:4000/](http://localhost:4000/).
+
 ## Development Server
 
 To start the development server, run the following command:
